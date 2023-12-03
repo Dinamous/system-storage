@@ -1,10 +1,13 @@
 import AdminJS from 'adminjs'
+import { locales as AdminJSLocales } from 'adminjs'
 import AdminJSExpress from '@adminjs/express'
 import express from 'express'
 import * as AdminJSMongoose from '@adminjs/mongoose'
 
 import mongoose from 'mongoose'
-import { Produto } from './Produto.model.js'
+import { Produto } from './models/Produto.model.js'
+import { Cliente } from './models/Cliente.model.js'
+import { Pedido } from './models/Pedido.model.js'
 const PORT = 3000
 
 AdminJS.registerAdapter({
@@ -13,13 +16,18 @@ AdminJS.registerAdapter({
 })
 
 const start = async () => {
-  await mongoose.connect("mongodb://127.0.0.1:27017/local")
+  const mongooseDB = await mongoose.connect("mongodb://127.0.0.1:27017/storage-system")
   const app = express()
 
-  const admin = new AdminJS({
-    resources: [Produto]
-  })
 
+  const admin = new AdminJS({
+    databases: [mongooseDB],
+    resources: [Produto,Cliente,Pedido],
+    locale: {
+      language: 'pt-BR',
+      availableLanguages: Object.keys(AdminJSLocales)
+    },
+  })
 
   const adminRouter = AdminJSExpress.buildRouter(admin)
   app.use(admin.options.rootPath, adminRouter)
