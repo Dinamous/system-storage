@@ -8,6 +8,7 @@ import mongoose from 'mongoose'
 import { Produto } from './models/Produto.model.js'
 import { Cliente } from './models/Cliente.model.js'
 import { Pedido } from './models/Pedido.model.js'
+import { Marca } from './models/Marca.model.js'
 const PORT = 3000
 
 AdminJS.registerAdapter({
@@ -22,7 +23,7 @@ const start = async () => {
 
   const admin = new AdminJS({
     databases: [mongooseDB],
-    resources: [Produto,Cliente,Pedido],
+    resources: [Produto,Cliente,Pedido,Marca],
     locale: {
       language: 'pt-BR',
       availableLanguages: Object.keys(AdminJSLocales)

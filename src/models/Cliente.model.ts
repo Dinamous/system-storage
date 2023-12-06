@@ -1,18 +1,25 @@
 import { model, Schema, Types } from 'mongoose'
 
 export interface ICliente {
-  nome: string;
+  RazaoSocial: string;
+  contato
   telefone: string;
   email: string;
   endereço: string;
+  incricaoMunicipal: string;
+  CEP: string;
+  UF: string;
 }
 
 export const ClienteSchema = new Schema<ICliente & Document>(
   {
-    nome: { type: 'String', required: true,unique:true },
+    RazaoSocial: { type: 'String', required: true,unique:true },
+    incricaoMunicipal: { type: 'String', required: false},
     telefone: { type: 'String', required: false },
-    email: { type: 'String', required: false},
+    email: { type: 'String', required: false, unique:false},
     endereço: { type: 'String', required: false },
+    UF: { type: 'String', required: false },
+    CEP: { type: 'String', required: false },
   },
   
 )
